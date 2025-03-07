@@ -253,21 +253,22 @@ void setup() {
 #ifdef USE_BASE
   #ifdef ARDUINO_ENC_COUNTER
     //set as inputs
-    DDRD &= ~(1<<LEFT_ENC_PIN_A);
-    DDRD &= ~(1<<LEFT_ENC_PIN_B);
-    DDRC &= ~(1<<RIGHT_ENC_PIN_A);
-    DDRC &= ~(1<<RIGHT_ENC_PIN_B);
+    DDRC &= ~(1 << LEFT_ENC_PIN_A);  // Changed from DDRD to DDRC
+    DDRC &= ~(1 << LEFT_ENC_PIN_B);  // Changed from DDRD to DDRC
+    DDRD &= ~(1 << RIGHT_ENC_PIN_A); // Changed from DDRC to DDRD
+    DDRD &= ~(1 << RIGHT_ENC_PIN_B); // Changed from DDRC to DDRD
     
     //enable pull up resistors
-    PORTD |= (1<<LEFT_ENC_PIN_A);
-    PORTD |= (1<<LEFT_ENC_PIN_B);
-    PORTC |= (1<<RIGHT_ENC_PIN_A);
-    PORTC |= (1<<RIGHT_ENC_PIN_B);
+    PORTC |= (1 << LEFT_ENC_PIN_A);  // Changed from PORTD to PORTC
+    PORTC |= (1 << LEFT_ENC_PIN_B);  // Changed from PORTD to PORTC
+    PORTD |= (1 << RIGHT_ENC_PIN_A); // Changed from PORTC to PORTD
+    PORTD |= (1 << RIGHT_ENC_PIN_B); // Changed from PORTC to PORTD
+
     
-    // tell pin change mask to listen to left encoder pins
-    PCMSK2 |= (1 << LEFT_ENC_PIN_A)|(1 << LEFT_ENC_PIN_B);
-    // tell pin change mask to listen to right encoder pins
-    PCMSK1 |= (1 << RIGHT_ENC_PIN_A)|(1 << RIGHT_ENC_PIN_B);
+    // tell pin change mask to listen to left encoder pins (PORTC uses PCMSK1)
+    PCMSK1 |= (1 << LEFT_ENC_PIN_A) | (1 << LEFT_ENC_PIN_B); 
+    // tell pin change mask to listen to right encoder pins (PORTD uses PCMSK2)
+    PCMSK2 |= (1 << RIGHT_ENC_PIN_A) | (1 << RIGHT_ENC_PIN_B);
     
     // enable PCINT1 and PCINT2 interrupt in the general interrupt mask
     PCICR |= (1 << PCIE1) | (1 << PCIE2);
