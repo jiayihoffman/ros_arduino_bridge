@@ -9,11 +9,6 @@ As I only have need for a subset of the functionality, I have no idea what does 
 Feedback/improvements are welcome (though no promises on how quickly I'll respond). I currently only use the L298N driver, and the Arduino encoder mode.
 
 
-
-TODO
-- Finish this README
-
-
 ## Functionality
 
 The main functionality provided is to receive motor speed requests over a serial connection, and provide encoder feedback.
@@ -46,3 +41,18 @@ Some quick things to note
 - Make the speed input counts per second
 - Add/test more driver boards
 - Add/test other functionality
+
+## How to sync updates from the original repository
+1. Fetch the latest changes 
+```
+git fetch upstream
+```
+2. Merge the Updates into my for
+```
+git checkout main
+git merge upstream/main
+```
+3. push the updates to my fork
+```
+git push origin main
+```
