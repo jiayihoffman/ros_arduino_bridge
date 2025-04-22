@@ -55,6 +55,25 @@
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
   }
+#elif defined OSEPP_TB6612
+  /* Include the Pololu library */
+  #include "TBMotor.h"
+
+  /* Create the motor objects */
+  OseppTBMotor Motor1(12, 11);
+  OseppTBMotor Motor2(8, 3);
+  
+  /* Wrap the motor driver initialization */
+  void initMotorController() {
+    // no op OseppTBMotor shield
+  }
+
+  // A convenience function for setting both motor speeds
+  void setMotorSpeeds(int leftSpeed, int rightSpeed) {
+    Motor1.SetSpeed(leftSpeed);
+    Motor2.SetSpeed(rightSpeed);
+  }
+  
 #elif defined L298_MOTOR_DRIVER
   void initMotorController() {
     digitalWrite(RIGHT_MOTOR_ENABLE, HIGH);

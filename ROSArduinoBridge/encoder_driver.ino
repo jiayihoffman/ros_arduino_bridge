@@ -32,24 +32,28 @@
   volatile long right_enc_pos = 0L;
   static const int8_t ENC_STATES [] = {0,1,-1,0,-1,0,0,1,1,0,0,-1,0,-1,1,0};  //encoder lookup table
     
-  /* Interrupt routine for LEFT encoder, taking care of actual counting */
-  ISR (PCINT2_vect){
-  	static uint8_t enc_last=0;
-        
-	enc_last <<=2; //shift previous state two places
-	enc_last |= (PIND & (3 << 2)) >> 2; //read the current state into lowest 2 bits
-  
-  	left_enc_pos += ENC_STATES[(enc_last & 0x0f)];
-  }
-  
-  /* Interrupt routine for RIGHT encoder, taking care of actual counting */
-  ISR (PCINT1_vect){
-        static uint8_t enc_last=0;
-          	
-	enc_last <<=2; //shift previous state two places
-	enc_last |= (PINC & (3 << 4)) >> 4; //read the current state into lowest 2 bits
-  
-  	right_enc_pos += ENC_STATES[(enc_last & 0x0f)];
+  /* Interrupt routine for LEFT and RIGHT encoder, taking care of actual counting */
+  ISR(PCINT1_vect) {
+    static uint8_t enc_last_left = 0;
+    static uint8_t enc_last_right = 0;
+
+    uint8_t pins = PINC;  // Read the entire PORTC once
+
+    // --- LEFT encoder (on PC2=A2 and PC3=A3) ---
+    // Shift previous state to make room for 2 new bits
+    enc_last_left <<= 2;
+
+    // Mask out the bits for LEFT_ENC_PIN_A and LEFT_ENC_PIN_B
+    // and shift them down to bit 0 and 1
+    enc_last_left |= (pins & ((1 << LEFT_ENC_PIN_A) | (1 << LEFT_ENC_PIN_B))) >> LEFT_ENC_PIN_A;
+
+    // Lookup the direction and update position
+    left_enc_pos += ENC_STATES[enc_last_left & 0x0F];
+
+    // --- RIGHT encoder (on PC4=A4 and PC5=A5) ---
+    enc_last_right <<= 2;
+    enc_last_right |= (pins & ((1 << RIGHT_ENC_PIN_A) | (1 << RIGHT_ENC_PIN_B))) >> RIGHT_ENC_PIN_A;
+    right_enc_pos += ENC_STATES[enc_last_right & 0x0F];
   }
   
   /* Wrap the encoder reading function */
