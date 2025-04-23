@@ -3,7 +3,7 @@
 This code turns an Arduino into a motor controller!
 It provides a simple serial interface to communicate with a high-level computer (e.g. running ROS), and generates the appropriate PWM signals for a motor driver, to drive two motors.
 
-This is a fork of the [original code]((https://github.com/joshnewans/ros_arduino_bridge), with the addition of the OSEPP_TB6612 motor shield and the adjustment of the encoder driver to use analog pins A2-A5 for encoder readings. For instructions on how to leverage the OSEPP_TB6612 motor shield in a robot car, please see my blog [Simplify Robot Cars using TB6612 Motor Shield](https://www.modularmachines.ai/security_robot/2025/04/21/SecurityRobot-MotorShield.html). 
+This is a fork of the [original code](https://github.com/joshnewans/ros_arduino_bridge), with the addition of the OSEPP_TB6612 motor shield and the adjustment of the encoder driver to use analog pins A2-A5 for encoder readings. For instructions on how to leverage the OSEPP_TB6612 motor shield in a robot car, please see my blog [Simplify Robot Cars using TB6612 Motor Shield](https://www.modularmachines.ai/security_robot/2025/04/21/SecurityRobot-MotorShield.html). 
 
 Feedback/improvements are welcome. I currently only use the OSEPP_TB6612 motor shield, L298N driver, and the Arduino encoder mode.
 
