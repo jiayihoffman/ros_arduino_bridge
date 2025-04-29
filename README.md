@@ -47,7 +47,7 @@ Some quick things to note
 ```
 git fetch upstream
 ```
-2. Merge the Updates into my for
+2. Merge the Updates into my fork
 ```
 git checkout main
 git merge upstream/main
